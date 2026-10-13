@@ -1,0 +1,219 @@
+/* =========================================================
+   home.css — 사이트 첫 화면(스카이라인)
+   ========================================================= */
+
+.boot {
+  padding: 64px 16px;
+  text-align: center;
+  font: 12px/20px var(--font-ui);
+}
+
+.home {
+  display: grid;
+  gap: 36px;
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  padding: 56px 16px 40px;
+}
+
+/* ---------- 제목 ---------- */
+.home-head {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+}
+.home-kicker {
+  font: 12px/18px var(--font-ui);
+  letter-spacing: 3px;
+}
+.home-title {
+  font: 700 72px/80px var(--font-ui);
+  letter-spacing: 2px;
+}
+.home-tagline {
+  font: 15px/24px var(--font-text);
+}
+
+/* ---------- 스카이라인: 카드 아랫선이 땅이 된다 ---------- */
+.skyline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: end;
+  border-bottom: 4px solid var(--paper);
+}
+.bcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 -2px;
+  padding: 0;
+  border: var(--line) solid var(--paper);
+  border-bottom: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.bcard:first-child {
+  margin-left: 0;
+}
+.bcard-pic {
+  position: relative;
+  border-bottom: var(--line) solid var(--paper);
+  background: var(--ink);
+}
+.bcard-pic canvas {
+  width: 100%;
+  height: auto;
+}
+.bcard-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 176px;
+  padding: 12px 12px 16px;
+}
+.bcard-name {
+  font: 12px/18px var(--font-ui);
+}
+.bcard-title {
+  font: 700 24px/30px var(--font-ui);
+}
+.bcard-intro {
+  font: 12px/18px var(--font-ui);
+}
+.bcard-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: auto;
+  font: 12px/18px var(--font-ui);
+}
+.bcard-progress {
+  padding: 0 6px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* 열린 건물: 누르면 색이 뒤집힌다 */
+.bcard.is-open:hover .bcard-body,
+.bcard.is-open:focus-visible .bcard-body {
+  background: var(--paper);
+  color: var(--ink);
+}
+.bcard.is-open:hover .bcard-progress,
+.bcard.is-open:focus-visible .bcard-progress {
+  background: var(--ink);
+  color: var(--paper);
+}
+.bcard.is-open:focus-visible {
+  outline-offset: -6px;
+}
+
+/* 잠긴 건물: 점선 테두리 + 자물쇠 */
+.bcard.is-locked {
+  cursor: not-allowed;
+}
+.bcard.is-locked .bcard-body {
+  background: var(--dither-sparse), var(--ink);
+}
+.bcard.is-locked .bcard-title {
+  letter-spacing: 6px;
+}
+.bcard-lock {
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  width: 26px;
+  height: 20px;
+  border: var(--line) solid var(--paper);
+  background: var(--ink);
+  transform: translateX(-50%);
+}
+.bcard-lock::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: -14px;
+  width: 10px;
+  height: 12px;
+  border: var(--line) solid var(--paper);
+  border-bottom: 0;
+}
+.bcard-lock::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 5px;
+  width: 4px;
+  height: 6px;
+  background: var(--paper);
+}
+
+/* 클리어 도장 */
+.bcard-stamp {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  display: grid;
+  text-align: center;
+  background: var(--ink);
+  color: var(--paper);
+  transform: rotate(-8deg);
+}
+
+.home-guide {
+  font: 12px/18px var(--font-ui);
+  text-align: center;
+}
+
+/* ---------- 크레딧 ---------- */
+.credit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--paper);
+  font: 12px/18px var(--font-ui);
+}
+
+/* ---------- 좁은 화면: 2열 → 1열 ---------- */
+@media (max-width: 1000px) {
+  .home-title {
+    font-size: 48px;
+    line-height: 56px;
+  }
+  .skyline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    border-bottom: 0;
+  }
+  .bcard {
+    margin: 0;
+    border-bottom: var(--line) solid var(--paper);
+  }
+}
+@media (max-width: 560px) {
+  .home {
+    padding-top: 36px;
+  }
+  .home-title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .skyline {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bcard-pic canvas {
+    height: 180px;
+    object-fit: cover;
+  }
+  .bcard-body {
+    min-height: 0;
+  }
+}

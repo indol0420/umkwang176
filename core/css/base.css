@@ -1,0 +1,263 @@
+/* =========================================================
+   base.css — 엄광로 176 공통 스타일(1비트 흑백)
+   색은 --ink(검정)와 --paper(종이색) 두 가지뿐이다.
+   회색이 필요한 곳은 1px 체크 무늬(디더)로 표현한다.
+   ========================================================= */
+
+/* 갈무리 픽셀 글꼴 — SIL OFL 1.1 (core/fonts/OFL.md) */
+@font-face {
+  font-family: 'Galmuri11';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Galmuri11.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Galmuri11';
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/Galmuri11-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Galmuri14';
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Galmuri14.woff2') format('woff2');
+}
+
+:root {
+  --ink: #0e0d0b;
+  --paper: #e9e4d5;
+  --font-ui: 'Galmuri11', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-text: 'Galmuri14', 'Galmuri11', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  /* 50% 회색 대신 쓰는 체크 무늬 */
+  --dither: repeating-conic-gradient(var(--paper) 0 25%, var(--ink) 0 50%) 0 0 / 2px 2px;
+  --dither-sparse: radial-gradient(var(--paper) 0.6px, transparent 0.8px) 0 0 / 4px 4px;
+  --line: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--paper);
+  font: 15px/24px var(--font-text);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+img,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* 키보드로 이동할 때만 보이는 점선 테두리 */
+:focus-visible {
+  outline: 2px dashed currentColor;
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- 버튼: 마우스를 올리면 색이 뒤집힌다 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 14px;
+  border: var(--line) solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: 12px/18px var(--font-ui);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled),
+.btn:focus-visible {
+  background: var(--paper);
+  color: var(--ink);
+  outline: none;
+}
+.on-paper .btn:hover:not(:disabled),
+.on-paper .btn:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn--solid {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+.btn--solid:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--paper);
+}
+.on-paper .btn--solid {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.on-paper .btn--solid:hover:not(:disabled) {
+  background: var(--paper);
+  color: var(--ink);
+}
+.btn:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+.btn--icon {
+  min-width: 36px;
+  padding: 8px;
+}
+
+/* ---------- 창(모달) ---------- */
+.modal-back {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  /* 1비트 반투명: 검은 점으로 뒤를 덮는다 */
+  background: repeating-conic-gradient(var(--ink) 0 25%, transparent 0 50%) 0 0 / 2px 2px;
+  overflow-y: auto;
+}
+.modal {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--line) solid var(--paper);
+  box-shadow: 6px 6px 0 var(--paper);
+  outline: none;
+}
+.modal--small {
+  width: min(420px, 100%);
+}
+.modal--paper {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 6px 6px 0 var(--ink), 6px 6px 0 2px var(--paper);
+}
+
+.confirm {
+  padding: 24px;
+  display: grid;
+  gap: 20px;
+}
+.confirm-title {
+  font: 700 12px/18px var(--font-ui);
+}
+.confirm-text {
+  white-space: pre-line;
+}
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ---------- 알림(토스트) ---------- */
+.toasts {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 1000;
+  display: grid;
+  gap: 8px;
+  width: min(480px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.toast {
+  padding: 10px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--line) solid var(--ink);
+  outline: var(--line) solid var(--paper);
+  font: 12px/18px var(--font-ui);
+  text-align: center;
+  animation: toast-in 0.18s steps(3) both;
+}
+.toast.is-out {
+  animation: toast-out 0.3s steps(3) both;
+}
+@keyframes toast-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+@keyframes toast-out {
+  to {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+
+/* ---------- 도장 ---------- */
+.stamp {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 3px double currentColor;
+  font: 700 12px/18px var(--font-ui);
+  letter-spacing: 1px;
+  transform: rotate(-6deg);
+}
+
+/* 움직임을 줄이고 싶은 사용자 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

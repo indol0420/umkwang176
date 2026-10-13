@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>미퇴실자 — 엄광로 176 · 중앙도서관</title>
+  <meta name="description" content="동의대학교 방탈출 시리즈 『엄광로 176』 중앙도서관 편">
+  <link rel="preload" href="../../core/fonts/Galmuri11.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../core/fonts/Galmuri14.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../core/css/base.css">
+  <link rel="stylesheet" href="../../core/css/game.css">
+</head>
+<body>
+  <div id="app">
+    <p class="boot">불러오는 중…</p>
+  </div>
+  <noscript><p class="boot">이 게임은 자바스크립트가 필요합니다.</p></noscript>
+
+  <!-- file:// 로 열면 ES 모듈이 막히므로 안내를 띄운다 -->
+  <script>
+    if (location.protocol === 'file:') {
+      document.getElementById('app').innerHTML =
+        '<p class="boot">VS Code의 Live Server(또는 GitHub Pages)로 열어 주세요.<br>파일을 더블클릭해 열면(file://) 브라우저 보안 정책 때문에 실행되지 않습니다.</p>';
+    }
+  </script>
+
+  <!-- 공통 엔진(core) + 이 테마의 data -->
+  <script type="module">
+    import { startGame } from '../../core/game.js';
+    import theme from './data/theme.js';
+    startGame(theme);
+  </script>
+</body>
+</html>
